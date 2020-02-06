@@ -27,5 +27,16 @@ trumpy = removeWords(trumpy, stopWordsList);
 trumpy = removeShortWords(trumpy, 1);
 %Make everything lowercase for dimension reduction
 trumpy = lower(trumpy);
-customStopWords = ["rt","retweet","amp","http","https","stock","stocks","inc","msnbc", "cont"];
+customStopWords = ["rt","retweet","amp","http","https","stock","stocks","inc","msnbc", "cont", "text", "am", "pm", "createdat", "mdash", "januari", "februari", "march", "april", "may", "june", "july", "august", "september", "oktober", "november", "december"];
 trumpy = removeWords(trumpy,customStopWords);
+trumpy
+%%
+bag = bagOfWords(trumpy)
+rng('default')
+numTopics = 15;
+mdl = fitlda(bag,numTopics,'Verbose',0);
+k = 30;
+topicIdx = 1;
+tbl = topkwords(mdl,k,topicIdx)
+figure
+wordcloud(tbl.Word,tbl.Score);
