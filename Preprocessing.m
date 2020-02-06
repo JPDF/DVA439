@@ -15,4 +15,4 @@ trumpy = erasePunctuation(trumpy);
 trumpy = removeStopWords(trumpy);
 trumpy = removeShortWords(trumpy, 3);
 trumpy = lower(trumpy);
-bag = bagOfWords(trumpy);
+bag = bagOfWords(trumpy); 
