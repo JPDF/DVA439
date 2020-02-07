@@ -1,9 +1,10 @@
 clear all;
 clc;
 %[num, txtTweets, rawTweets] = xlsread('sample-tweets.csv');
-
-T = readtable('sample-tweets.csv');
-rawTweets = table2cell(T(:,1)); %Removes the tweet data, keeps only the text
+file1 = '1-100SentimentDataset.csv';
+file2 = 'sample-tweets.csv';
+T = readtable(file1);
+rawTweets = table2cell(T(:,4)); %Choose col containing the tweets
 
 tweetsOriginal = tokenizedDocument(rawTweets) %original tweets saved for viewing
 %% 
