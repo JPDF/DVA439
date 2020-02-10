@@ -15,6 +15,8 @@ trumpy = eraseURLs(trumpy);
 torep = {'<[^>]+>', '(?:@[\w_]+)', '(?:\#+[\w_]+[\w\''_\-]*[\w_]+)', '(?:\$+[\w_]+)','\d'};                                  
 trumpy = strip(regexprep(trumpy,torep,''));
 trumpy = tokenizedDocument(trumpy);
+%Make everything lowercase for dimension reduction
+trumpy = lower(trumpy);
 %Removal of specialcharacters etc
 trumpy = erasePunctuation(trumpy);
 %Specialized stop words list for tweets to keep sentiment and dimension
@@ -25,8 +27,6 @@ stopWordsList(ismember(stopWordsList,wordsToKeep)) = [];
 trumpy = removeWords(trumpy, stopWordsList);
 %Removal of short words of 1 character since they hold no meaning.
 trumpy = removeShortWords(trumpy, 1);
-%Make everything lowercase for dimension reduction
-trumpy = lower(trumpy);
 customStopWords = ["rt","retweet","amp","http","https","stock","stocks","inc","msnbc", "cont", "text", "am", "pm", "createdat", "mdash", "januari", "februari", "march", "april", "may", "june", "july", "august", "september", "oktober", "november", "december"];
 trumpy = removeWords(trumpy,customStopWords);
 trumpy
