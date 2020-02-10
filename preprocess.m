@@ -19,6 +19,6 @@ data = removeWords(data, stopWordsList);
 %Removal of short words of 2 character since they hold no meaning.
 data = removeShortWords(data, 2);
 data = removeWords(data,customStopWords);
-data = normalizeWords(data)
+%data = normalizeWords(data);
 end
 
