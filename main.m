@@ -1,8 +1,8 @@
 %Start up
 clear all; clc; close all;
-file1 = '1-1kSentimentDataset.csv';
-file2 = 'sample-tweets.csv';
-T = readtable(file1);
+
+file = 'Data\Twitter\1-100SentimentDataset.csv';
+T = readtable(file);
 rawTweets = table2cell(T); %Choose col containing the tweets
 
 % Remove HTML tags, @mentions, hashtags(#), tickers($), and numeric values 
@@ -13,10 +13,17 @@ customStopWords = ["rt","retweet","amp","http","https","stock","stocks","inc","m
 tokenizedTweetsPreprocessed = preprocess(rawTweets(:,4), toRemoveRegex, wordsToKeep, customStopWords);
 %Converts to cell array
 tokenizedTweetsCells = doc2cell(tokenizedTweetsPreprocessed);
-for i = 1:length(rawTweets)
-    rawTweets(i, 5) = cellstr(join(tokenizedTweetsCells{i}));
-end
-% Adds the strings to column 6 for classification training.
-rawTweets(:, 6) = tokenizedTweetsCells;
 
-trainingSet = cell2table(rawTweets);
+emb = fastTextWordEmbedding;
+
+
+
+for i = 1:length(rawTweets)
+    idDelete = ~isVocabularyWord(emb,tokenizedTweetsCells{i});
+    tokenizedTweetsCells{i}(idDelete) = [];
+    rawTweets(i, 5) = cellstr(join(tokenizedTweetsCells{i}));
+    wordVector(i,:) = mean(word2vec(emb, string(tokenizedTweetsCells{i})));
+end
+
+wordVector(:,301) = cell2mat(rawTweets(:,2));
+trainingTweets = cell2table(rawTweets,'VariableNames',{'Index','Sentiment', 'Sentiment_Source', 'Sentiment_Text', 'Preprocessed_Sentiment_Text'});
