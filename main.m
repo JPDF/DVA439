@@ -1,4 +1,3 @@
-%Start up
 clear; clc; close all;
 %Import data from file
 file = 'Data\Twitter\1-100SentimentDataset.csv';
