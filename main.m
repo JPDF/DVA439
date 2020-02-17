@@ -1,7 +1,7 @@
 %Start up
 clear all; clc; close all;
 
-file = 'Data\Twitter\1-100SentimentDataset.csv';
+file = '1-100SentimentDataset.csv';
 T = readtable(file);
 rawTweets = table2cell(T); %Choose col containing the tweets
 
