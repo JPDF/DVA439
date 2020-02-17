@@ -27,3 +27,8 @@ end
 
 wordVector(:,301) = cell2mat(rawTweets(:,2));
 trainingTweets = cell2table(rawTweets,'VariableNames',{'Index','Sentiment', 'Sentiment_Source', 'Sentiment_Text', 'Preprocessed_Sentiment_Text'});
+
+%Term Frequency - Inverse Document Frequency(TF-IDF)
+[termFreqMatrix, words] = termFrequency(tokenizedTweetsPreprocessed);
+termFreqMatrix(:,words+1)= cell2mat(rawTweets(:,2));
+
