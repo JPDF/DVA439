@@ -1,11 +1,7 @@
 clear; clc; close all;
 %Import data from file
-file = 'Data\Twitter\1-100SentimentDataset.csv';
+file = 'Data\Twitter\1000_weighted.csv';
 rawData = readtable(file);
-
-file = 'Data/Twitter/1-1kSentimentDataset.csv';
-T = readtable(file);
-rawTweets = table2cell(T); %Choose col containing the tweets
 
 % Remove HTML tags, @mentions, hashtags(#), tickers($), and numeric values 
 toRemoveRegex = {'<[^>]+>', '(?:@[\w_]+)', '(?:&[\w_]+)', '(?:\#+[\w_]+[\w\''_\-]*[\w_]+)', '(?:\$+[\w_]+)','\d'}; 
