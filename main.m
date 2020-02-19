@@ -1,6 +1,6 @@
 clear; clc; close all;
 %Import data from file
-file = 'Data\Twitter\1000_weighted.csv';
+file = 'Data/Twitter/1000_weighted.csv';
 rawData = readtable(file);
 
 % Remove HTML tags, @mentions, hashtags(#), tickers($), and numeric values 
