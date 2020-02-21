@@ -13,6 +13,9 @@ data = strip(regexprep(data,toRemoveRegex,''));
 %Tokenize the text
 data = tokenizedDocument(data);
 
+%Emoji to word
+[~,convertTable]  = xlsread('EmojiConverter/emojiTable.xlsx');
+data = replace(data,string(convertTable(:,1)),string(convertTable(:,2)))
 %Add part-of-speech details to improve lemmatization
 data = addPartOfSpeechDetails(data);
 %Remove words to keep from the stop words list
