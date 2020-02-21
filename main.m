@@ -5,7 +5,7 @@ addpath('./AutoCorrector')
 
 fprintf('Importing data...\n-Why? '); why
 %Import data from file
-file = 'Data\Twitter\1000_weighted.csv';
+file = 'Data/Twitter/1000_weighted.csv';
 rawData = readtable(file);
 
 fprintf('Preprocessing...\n-Why? '); why
