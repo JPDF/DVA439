@@ -5,7 +5,7 @@ addpath('./AutoCorrector')
 
 fprintf('Importing data...\n-Why? '); why
 %Import data from file
-file = 'Data/Twitter/1000_weighted.csv';
+file = 'Data/Twitter/100k_weighted.csv';
 rawData = readtable(file);
 
 fprintf('Preprocessing...\n-Why? '); why
@@ -27,9 +27,9 @@ docSeqMatrix = docSequence(emb, preprocessedData);
 docSeqMatrix(:,301) = rawData.Sentiment;
 
 %Term Frequency - Inverse Document Frequency(TF-IDF)
-fprintf('TF-IDF...\n-Why? '); why
-termFreqMatrix = termFrequency(preprocessedData);
-termFreqMatrix(:,end+1) = rawData.Sentiment;
+% fprintf('TF-IDF...\n-Why? '); why
+% termFreqMatrix = termFrequency(preprocessedData);
+% termFreqMatrix(:,end+1) = rawData.Sentiment;
 
 %Clear unnecessary variables in workspace
 clearvars -except correctedWords eds preprocessedData rawData docSeqMatrix termFreqMatrix;
