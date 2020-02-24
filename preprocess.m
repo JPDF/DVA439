@@ -15,7 +15,7 @@ data = tokenizedDocument(data);
 
 %Emoji to word
 [~,convertTable]  = xlsread('EmojiConverter/emojiTable.xlsx');
-data = replace(data,string(convertTable(:,1)),string(convertTable(:,2)))
+data = replace(data,string(convertTable(:,1)),string(convertTable(:,2)));
 %Add part-of-speech details to improve lemmatization
 data = addPartOfSpeechDetails(data);
 %Remove words to keep from the stop words list
@@ -30,7 +30,11 @@ data = normalizeWords(data, 'Style', 'lemma');
 data = erasePunctuation(data);
 
 %Removal of short words of 2 character since they hold no meaning.
-data = removeShortWords(data, 2);
+vocab = data.Vocabulary;
+tf = strlength(vocab) <= 2 & ~ismember(vocab, wordsToKeep);
+data = removeWords(data,vocab(tf));
+%data = removeShortWords(data, 2);
+%Remove custom stop words
 data = removeWords(data,customStopWords);
 %data = normalizeWords(data);
 
