@@ -9,6 +9,12 @@ file = 'Data/Twitter/100k_weighted.csv';
 rawData = readtable(file);
 
 fprintf('Preprocessing...\n-Why? '); why
+
+rawData.SentimentText = decodeHTMLEntities(rawData.SentimentText);
+wordsToChange = ["<3",  " x " , "$"];
+referingWords = [" love ", " kiss ", " money "];
+rawData.SentimentText = regexprep(rawData.SentimentText,wordsToChange,referingWords);
+
 %Remove HTML tags, @mentions, hashtags(#), tickers($), and numeric values 
 toRemoveRegex = {'<[^>]+>', '(?:@[\w_]+)', '(?:&[\w_]+)', '(?:\#+[\w_]+[\w\''_\-]*[\w_]+)', '(?:\$+[\w_]+)','\d'}; 
 wordsToKeep = ["are", "aren't", "arent", "can", "can't", "cant", "cannot", "could", "couldn't", "did", "didn't", "didnt", "do", "does", "doesn't", "doesnt", "don't", "dont", "is", "isn't", "isnt", "no", "not", "was", "wasn't", "wasnt", "with", "without", "won't", "would", "wouldn't"];
