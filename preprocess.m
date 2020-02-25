@@ -17,7 +17,7 @@ data = tokenizedDocument(data);
 [~,convertTable]  = xlsread('EmojiConverter/emojiTable.xlsx');
 data = replace(data,string(convertTable(:,1)),string(convertTable(:,2)));
 %Add part-of-speech details to improve lemmatization
-data = addPartOfSpeechDetails(data);
+data = addPartOfSpeechDetails(data, 'RetokenizeMethod', 'none');
 %Remove words to keep from the stop words list
 stopWordsList = stopWords;
 stopWordsList(ismember(stopWordsList,wordsToKeep)) = [];
