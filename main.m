@@ -51,17 +51,53 @@ load Models\subspaceDiscriminant.mat
 classifier = {boostedTrees, KNN, logisticRegression, MediumGaussianSVM, subspaceDiscriminant};
 Y = docSeqMatrix(:,301);
 
-for i = 1:length(classifier)
-    pred_Y = classifier{i}.predictFcn(docSeqMatrix(:,1:300));
+yL = length(Y);
+cL = length(classifier);
+
+pred_Y = zeros(yL, cL);
+acc = zeros(cL, 1);
+
+for i = 1:cL
+    pY = classifier{i}.predictFcn(docSeqMatrix(:,1:300))
+    pred_Y(:, i) = pY;
     
     % Plot the confusion matrix
-    figure
-    plotconfusion(Y', pred_Y')
+    % figure
+    % plotconfusion(Y', pY')
 
-    confusionMatrices{i} = confusionmat(Y,pred_Y)
+    confusionMatrices{i} = confusionmat(Y,pY);
+    
+    tp = confusionMatrices{i}(1,1);
+    tn = confusionMatrices{i}(2,2);
+    acc(i) = (tp+tn)/yL;
 end
 
-probConfusionMatrix(confusionMatrices)
+% MAJORITY VOTER
+majorityVote = mode(pred_Y, 2);
+plotconfusion(Y', majorityVote')
+
+% WEIGHTED MAJORITY VOTER
+
+% Tuning accuracy of the classifiers
+acc(4) = acc(4)+0.8;
+
+% Make vote pool [0 1]
+pool = zeros(yL, 2);
+for i=1:yL
+    for k=1:cL
+        pool(i, pred_Y(i,k)+1) = pool(i, pred_Y(i,k)+1) + acc(k);
+    end
+end
+% Determine which vote has the highest rate
+[~, wMajorityVote] = max(pool, [], 2);
+wMajorityVote = wMajorityVote-1;
+plotconfusion(Y', wMajorityVote')
+
+
+%probConfusionMatrices = probConfusionMatrix(confusionMatrices);
+
+
+
 
 %figure
 %confusionchart(pm{1}*100,'DiagonalColor','#82CF97','OffDiagonalColor','red');
