@@ -53,18 +53,18 @@ Y = docSeqMatrix(:,301);
 
 for i = 1:length(classifier)
     pred_Y = classifier{i}.predictFcn(docSeqMatrix(:,1:300));
+    
+    % Plot the confusion matrix
+    figure
+    plotconfusion(Y', pred_Y')
 
     confusionMatrices{i} = confusionmat(Y,pred_Y)
 end
 
 probConfusionMatrix(confusionMatrices)
 
-
-
-
 %figure
-%confusionchart(confusionMatrix,'DiagonalColor','#82CF97','OffDiagonalColor','red');
-
+%confusionchart(pm{1}*100,'DiagonalColor','#82CF97','OffDiagonalColor','red');
 
 
 % total0 = confusionMatrix(1,1)+confusionMatrix(2,1);

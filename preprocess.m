@@ -24,7 +24,7 @@ stopWordsList(ismember(stopWordsList,wordsToKeep)) = [];
 %Remove stop words
 data = removeWords(data, stopWordsList);
 %Lemmatizise the data
-data = normalizeWords(data, 'Style', 'lemma');
+data = normalizeWords(data, 'Style', 'stem');
 
 %Removal of specialcharacters etc
 data = erasePunctuation(data);
