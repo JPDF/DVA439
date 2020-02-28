@@ -40,3 +40,37 @@ docSeqMatrix(:,301) = rawData.Sentiment;
 %Clear unnecessary variables in workspace
 clearvars -except correctedWords eds preprocessedData rawData docSeqMatrix termFreqMatrix;
 fprintf('Done!\n-Why? '); why
+
+%%
+load Models\boostedTrees.mat
+load Models\KNN.mat
+load Models\logisticRegression.mat
+load Models\mediumGaussianSVM.mat
+load Models\subspaceDiscriminant.mat
+
+classifier = {boostedTrees, KNN, logisticRegression, MediumGaussianSVM, subspaceDiscriminant};
+Y = docSeqMatrix(:,301);
+
+for i = 1:length(classifier)
+    pred_Y = classifier{i}.predictFcn(docSeqMatrix(:,1:300));
+
+    confusionMatrices{i} = confusionmat(Y,pred_Y)
+end
+
+probConfusionMatrix(confusionMatrices)
+
+
+
+
+%figure
+%confusionchart(confusionMatrix,'DiagonalColor','#82CF97','OffDiagonalColor','red');
+
+
+
+% total0 = confusionMatrix(1,1)+confusionMatrix(2,1);
+% total1 = confusionMatrix(1,2)+confusionMatrix(2,2);
+% newConfusionMatrix(1,1) = confusionMatrix(1,1)/total0;
+% newConfusionMatrix(1,2) = confusionMatrix(1,2)/total1;
+% newConfusionMatrix(2,1) = confusionMatrix(2,1)/total0;
+% newConfusionMatrix(2,2) = confusionMatrix(2,2)/total1;
+% newConfusionMatrix
